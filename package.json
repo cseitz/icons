@@ -1,0 +1,27 @@
+{
+  "name": "cseitz-icons",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "projects/*"
+  ],
+  "scripts": {
+    "dev": "cross-env FORCE_COLOR=1 turbo run dev --parallel",
+    "start": "cross-env FORCE_COLOR=1 turbo run start --parallel",
+    "build": "cross-env FORCE_COLOR=1 turbo run build --parallel",
+    "lint": "cross-env FORCE_COLOR=1 turbo run lint",
+    "exports": "exports"
+  },
+  "devDependencies": {
+    "@cseitz/exports": "^1.0.8",
+    "cross-env": "^7.0.3",
+    "turbo": "latest"
+  },
+  "packageManager": "npm@8.19.3",
+  "engines": {
+    "npm": ">=7.0.0",
+    "turbo": ">=14.0.0"
+  }
+}
