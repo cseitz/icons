@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
 const { writeFileSync, existsSync } = require('fs');
-const { readdir, readFile, rename } = require('fs/promises');
+const { readdir, readFile, rename, writeFile } = require('fs/promises');
 const { freemem, totalmem, EOL } = require('os');
 const { basename, extname } = require('path');
 const { memoryUsage } = require('process');
@@ -11,7 +11,7 @@ const __pkg = __package + '/package.json';
 const fa = require(__pkg);
 const { name } = require(__dirname + '/package.json');
 
-const MATCH_SOURCE = /var source = require\(\'.\/(.+)'\)/g;
+const MATCH_SOURCE = /(var source = require\(\'.\/)(.+)('\))/;
 
 if (!fa.name.startsWith('@cseitz')) {
 
@@ -73,7 +73,12 @@ if (!fa.name.startsWith('@cseitz')) {
         }
         for (const [key, from] of remaps) {
             const to = mapped.get(from);
-            console.log('remap', { key, from, to })
+            console.log('remap', { key, from, to });
+            if (to) {
+                const data = await readFile(__files + '/' + key, 'utf8');
+                await writeFile(data.replace(MATCH_SOURCE, `$1${to}$3`));
+                await move(key);
+            }
         }
         bar.stop();
     })();
