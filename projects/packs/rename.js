@@ -66,13 +66,14 @@ if (!fa.name.startsWith('@cseitz')) {
             const name = basename(key, extname(key));
             const data = await readFile(__files + '/' + key, 'utf8');
             if (MATCH_SOURCE.test(data)) {
-                remaps.push([key, Array.from(data.matchAll(MATCH_SOURCE), o => o[1])]);
+                remaps.push([key, data.match(MATCH_SOURCE)[1]]);
             } else {
                 await move(key);
             }
         }
-        for (const [key, to] of remaps) {
-            console.log('remap', { key, to })
+        for (const [key, from] of remaps) {
+            const to = mapped.get(from);
+            console.log('remap', { key, from, to })
         }
         bar.stop();
     })();
