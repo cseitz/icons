@@ -41,12 +41,16 @@ if (!fa.name.startsWith('@cseitz')) {
         for (const key of files) {
             const resolved = __files + '/' + key; //require.resolve();
             const name = basename(key, extname(key));
-            const data = require(resolved);
-            if ('iconName' in data) {
-                await rename(__package + '/' + key, __package + '/' + data.iconName + '.js');
-                await rename(__package + '/' + name + '.d.ts', __package + '/' + data.iconName + '.d.ts');
+            try {
+                const data = require(resolved);
+                if ('iconName' in data) {
+                    await rename(__package + '/' + key, __package + '/' + data.iconName + '.js');
+                    await rename(__package + '/' + name + '.d.ts', __package + '/' + data.iconName + '.d.ts');
+                }
+                delete require.cache[resolved];
+            } catch (err) {
+                console.error(err);
             }
-            delete require.cache[resolved];
             bar.increment(1);
         }
         bar.stop();
@@ -55,7 +59,7 @@ if (!fa.name.startsWith('@cseitz')) {
         }
     })();
 
-    
+
 
 }
 // else {
