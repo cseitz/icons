@@ -38,19 +38,22 @@ if (!fa.name.startsWith('@cseitz')) {
         const files = (await readdir(__files))
             .filter(o => o.endsWith('.js') && !o.startsWith('index') && o !== 'attribution.js');
         bar.start(files.length, 0);
+        const mapped = new Map();
         for (const key of files) {
             const resolved = __files + '/' + key; //require.resolve();
             const name = basename(key, extname(key));
             try {
                 const data = require(resolved);
                 if ('iconName' in data) {
-                    console.log(key, '=>', data.iconName + '.js')
-                    // await rename(__files + '/' + key, __files + '/' + data.iconName + '.js');
-                    // await rename(__files + '/' + name + '.d.ts', __files + '/' + data.iconName + '.d.ts');
+                    mapped.set(key, data.iconName + '.js');
+                    // console.log(key, '=>', data.iconName + '.js')
+                    await rename(__files + '/' + key, __files + '/' + data.iconName + '.js');
+                    await rename(__files + '/' + name + '.d.ts', __files + '/' + data.iconName + '.d.ts');
                 }
                 delete require.cache[resolved];
             } catch (err) {
-                console.error(err);
+                // console.error(err);
+                console.log(err.code, key, mapped.get(key));
             }
             bar.increment(1);
         }
