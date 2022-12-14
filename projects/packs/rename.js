@@ -66,7 +66,7 @@ if (!fa.name.startsWith('@cseitz')) {
             const name = basename(key, extname(key));
             const data = await readFile(__files + '/' + key, 'utf8');
             if (MATCH_SOURCE.test(data)) {
-                remaps.push([key, data.match(MATCH_SOURCE)[1]]);
+                remaps.push([key, MATCH_SOURCE.exec(data)[1]]);
             } else {
                 await move(key);
             }
