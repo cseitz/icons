@@ -5,6 +5,7 @@ const { freemem, totalmem, EOL } = require('os');
 const { basename, extname } = require('path');
 const { memoryUsage } = require('process');
 const { inspect } = require('util');
+const kebabCase = require('lodash/kebabCase');
 
 const __package = __dirname + '/package';
 const __pkg = __package + '/package.json';
@@ -51,6 +52,7 @@ if (!fa.name.startsWith('@cseitz')) {
         const files = (await readdir(__files))
             .filter(o => o.endsWith('.js') && !o.startsWith('index') && o !== 'attribution.js');
         bar.start(files.length, 0);
+        const named = new Set();
         const mapped = new Map();
         const remaps = new Array();
         const move = async function(key) {
@@ -59,13 +61,19 @@ if (!fa.name.startsWith('@cseitz')) {
             const resolved = __files + '/' + key; //require.resolve();
             try {
                 const data = require(resolved);
-                if ('iconName' in data && !mapped.get(name)) {
+                if ('iconName' in data) {
+                    let __name = data.iconName;
+                    if (named.has(__name)) {
+                        console.log('avoid mapping', name, 'to', __name, {
+                            instead: kebabCase(name),
+                        });
+                        __name = kebabCase(name);
+                    }
                     // console.log(key, '=>', data.iconName + '.js')
-                    await rename(__files + '/' + key, __files + '/' + data.iconName + '.js');
-                    await rename(__files + '/' + name + '.d.ts', __files + '/' + data.iconName + '.d.ts');
+                    await rename(__files + '/' + key, __files + '/' + __name + '.js');
+                    await rename(__files + '/' + name + '.d.ts', __files + '/' + __name + '.d.ts');
                     mapped.set(name, data.iconName);
-                } else if (mapped.get(name)) {
-                    console.log('avoid remapping', name);
+                    named.set(data.iconName);
                 }
                 delete require.cache[resolved];
             } catch (err) {
