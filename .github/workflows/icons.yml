@@ -20,13 +20,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@cseitz'
       - name: Install
-        working-directory: packages/icons
+        working-directory: projects/icons
         run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} npm install
       - name: Build
-        working-directory: packages/icons
+        working-directory: projects/icons
         run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} npm run build
       - name: Publish
-        working-directory: packages/icons
+        working-directory: projects/icons
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
