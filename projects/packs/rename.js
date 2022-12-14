@@ -77,8 +77,8 @@ if (!fa.name.startsWith('@cseitz')) {
                 }
                 delete require.cache[resolved];
             } catch (err) {
-                // console.error(err);
-                console.log(err.code, key, mapped.get(key));
+                console.log('error:', key, mapped.get(key));
+                console.error(err);
             }
             bar.increment(1);
         }
