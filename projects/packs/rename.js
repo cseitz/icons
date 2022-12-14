@@ -42,11 +42,11 @@ if (!fa.name.startsWith('@cseitz')) {
             const resolved = __files + '/' + key; //require.resolve();
             const name = basename(key, extname(key));
             try {
-                
                 const data = require(resolved);
                 if ('iconName' in data) {
-                    await rename(__package + '/' + key, __package + '/' + data.iconName + '.js');
-                    await rename(__package + '/' + name + '.d.ts', __package + '/' + data.iconName + '.d.ts');
+                    console.log(key, '=>', data.iconName + '.js')
+                    // await rename(__files + '/' + key, __files + '/' + data.iconName + '.js');
+                    // await rename(__files + '/' + name + '.d.ts', __files + '/' + data.iconName + '.d.ts');
                 }
                 delete require.cache[resolved];
             } catch (err) {
