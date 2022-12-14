@@ -5,7 +5,7 @@ const { freemem, totalmem, EOL } = require('os');
 const { basename, extname } = require('path');
 const { memoryUsage } = require('process');
 const { inspect } = require('util');
-const kebabCase = require('lodash/kebabCase');
+const { kebabCase } = require('lodash');
 
 const __package = __dirname + '/package';
 const __pkg = __package + '/package.json';

@@ -23,6 +23,9 @@ jobs:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
           scope: '@cseitz'
+      - name: Install
+        working-directory: projects/packs
+        run: npm install
       - name: Download Icons
         working-directory: projects/packs
         run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} PKG=${{ matrix.package }} npm run pull
