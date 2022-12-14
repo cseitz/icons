@@ -20,7 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@cseitz'
       - name: Install
-        working-directory: packages/react
+        working-directory: packages/icons
         run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} npm install
       - name: Build
         working-directory: packages/icons
