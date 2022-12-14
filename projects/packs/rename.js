@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
 const { writeFileSync, existsSync } = require('fs');
-const { readdir, readFile, rename, writeFile } = require('fs/promises');
+const { readdir, readFile, rename, writeFile, access } = require('fs/promises');
 const { freemem, totalmem, EOL } = require('os');
 const { basename, extname } = require('path');
 const { memoryUsage } = require('process');
@@ -56,15 +56,16 @@ if (!fa.name.startsWith('@cseitz')) {
         const move = async function(key) {
             const name = basename(key, extname(key));
             const __file = __files + '/' + name;
-            const data = await readFile(__file + '.js');
             const resolved = __files + '/' + key; //require.resolve();
             try {
                 const data = require(resolved);
-                if ('iconName' in data) {
-                    mapped.set(name, data.iconName);
+                if ('iconName' in data && !mapped.get(name)) {
                     // console.log(key, '=>', data.iconName + '.js')
                     await rename(__files + '/' + key, __files + '/' + data.iconName + '.js');
                     await rename(__files + '/' + name + '.d.ts', __files + '/' + data.iconName + '.d.ts');
+                    mapped.set(name, data.iconName);
+                } else if (mapped.get(name)) {
+                    console.log('avoid remapping', name);
                 }
                 delete require.cache[resolved];
             } catch (err) {
