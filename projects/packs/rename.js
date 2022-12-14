@@ -16,7 +16,7 @@ const MATCH_SOURCE = /(var source = require\(\'.\/)(.+)('\))/;
 
 if (!fa.name.startsWith('@cseitz')) {
 
-    execSync('npm install cli-progress lodash --no-save');
+    execSync('npm install cli-progress lodash');
 
     const names = [
         ...fa.name.split('/').pop().split('-').filter(o => o != 'pro' && o != 'svg' && o != 'icons' && o != 'free'),
