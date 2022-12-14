@@ -26,16 +26,18 @@ jobs:
         working-directory: projects/packs
         run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} PKG=${{ matrix.package }} npm run pull
       - name: pre ls
+        if: false
         working-directory: projects/packs/package
         run: ls
       - name: Rename Package
         working-directory: projects/packs
         run: npm run rename
       - name: post ls
+        if: false
         working-directory: projects/packs/package
         run: ls
       - name: Publish
-        if: false
+        if: true
         working-directory: projects/packs/package
         run: npm publish --access public
         env:
