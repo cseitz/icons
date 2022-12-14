@@ -15,5 +15,7 @@
         "@fortawesome/fontawesome-svg-core": "^6.2.1"
     },
     "devDependencies": {
+        "cli-progress": "^3.11.2",
+        "lodash": "^4.17.21"
     }
 }
