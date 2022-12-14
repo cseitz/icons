@@ -28,6 +28,9 @@ jobs:
       - name: Rename Package
         working-directory: projects/packs
         run: npm run rename
+      - name: ls
+        working-directory: projects/packs/package
+        run: ls
       - name: Publish
         if: false
         working-directory: projects/packs/package
