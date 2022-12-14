@@ -49,12 +49,13 @@ if (!fa.name.startsWith('@cseitz')) {
             delete require.cache[resolved];
             bar.increment(1);
         }
-        bar.stop
+        bar.stop();
+        if (true) {
+            throw new Error(`Intentional Failure`)
+        }
     })();
 
-    if (true) {
-        throw new Error(`Intentional Failure`)
-    }
+    
 
 }
 // else {
