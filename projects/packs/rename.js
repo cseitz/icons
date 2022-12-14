@@ -38,7 +38,7 @@ if (!fa.name.startsWith('@cseitz')) {
         //     url: 'https://github.com/cseitz/icons/issues'
         // },
         license: 'UNLICENSED',
-        version: '1.0.1',
+        version: '1.0.2',
         name: newName,
     }, null, 2));
 
@@ -84,7 +84,7 @@ if (!fa.name.startsWith('@cseitz')) {
         }
         for (const [key, from] of remaps) {
             const to = mapped.get(from);
-            // console.log('remap', { key, from, to });
+            console.log('remap', { key, from, to });
             if (to) {
                 const data = await readFile(__files + '/' + key, 'utf8');
                 await writeFile(__files + '/' + key, data.replace(MATCH_SOURCE, `$1${to}$3`));

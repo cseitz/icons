@@ -48,8 +48,18 @@ type SvgIconProps = {
 
 
 export function Icon(icon: IconFileDefinition) {
-    return function(props: any) {
-        return <div>icon {icon.iconName}</div>
+    return function (props: any) {
+        console.log(icon);
+        return <div>icon</div>
+    }
+}
+
+export function Icon2(name: string) {
+    const icon = require(name); //('@cseitz/icons-' + name));
+    console.log({ icon });
+    return function (props: any) {
+        console.log(icon);
+        return <div>icon2</div>
     }
 }
 

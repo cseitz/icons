@@ -1,10 +1,13 @@
 import { Box, Button } from '@mantine/core';
-import { Icon } from '@cseitz/icons';
-import { faHouse } from '@cseitz/fontawesome-svg-regular/faHouse';
-import { faHouseUser } from '@cseitz/fontawesome-svg-regular/faHouseUser';
+import { Icon, Icon2 } from '@cseitz/icons';
 
-const HouseIcon = Icon(faHouse);
-const HouseUserIcon = Icon(faHouseUser);
+import house from '@cseitz/icons-regular/house';
+import houseUser from '@cseitz/icons-regular/house-user';
+
+const HouseIcon = Icon(house);
+const HouseUserIcon = Icon(houseUser);
+
+const PlusIcon = Icon2('@cseitz/icons-regular/plus');
 
 // const HouseIcon = Icon({
 //     name: 'house',
