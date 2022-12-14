@@ -17,6 +17,7 @@
         { "icon": "log", "extensions": [".github/workflows"] },
         { "icon": "route", "extensions": ["tools/proxy"] },
         { "icon": "git", "extensions": ["repos"] },
+        { "icon": "paket", "extensions": ["packs"] },
     ],
     "vsicons.associations.files": [
         { "icon": "nginx", "extensions": ["docker/server/nginx/*"] },
@@ -54,6 +55,6 @@
         "**/next-env.d.ts": true,
         "**/.turbo": true,
         "**/build": true,
-        "**/dist": true,
+        // "**/dist": true,
     },
 }

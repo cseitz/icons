@@ -1,0 +1,36 @@
+name: Icon Packs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  svg:
+    name: Publish
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [pro-solid, pro-regular, pro-light, pro-thin, pro-duotone, sharp-solid, free-brands]
+    concurrency:
+      group: ${{ github.workflow }}-${{ matrix.package }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@cseitz'
+      - name: Download Icons
+        working-directory: projects/packs
+        run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} PKG=${{ matrix.package }} npm run pull
+      - name: Rename Package
+        working-directory: projects/packs
+        run: npm run rename
+      - name: Publish
+        if: false
+        working-directory: projects/packs/package
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

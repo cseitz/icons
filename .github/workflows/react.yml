@@ -1,0 +1,38 @@
+name: FontAwesome React
+
+on:
+  workflow_dispatch:
+
+jobs:
+  react:
+    name: Publish
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@cseitz'
+      - name: Install
+        working-directory: packages/react
+        run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} npm install
+      - name: Build
+        working-directory: packages/react
+        run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} npm run build
+      - name: Move Files
+        working-directory: packages/react
+        run: mv dist/* .
+      - name: Populate Files
+        working-directory: packages/react
+        run: node populate.js
+      - name: Publish
+        working-directory: packages/react
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
