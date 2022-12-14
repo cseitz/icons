@@ -40,12 +40,8 @@ jobs:
         if: false
         working-directory: projects/packs/package
         run: ls
-      - name: cat plus
-        if: false
-        working-directory: projects/packs/package
-        run: cat plus.js
       - name: Publish
-        if: false
+        if: true
         working-directory: projects/packs/package
         run: npm publish --access public
         env:

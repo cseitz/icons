@@ -39,7 +39,7 @@ if (!fa.name.startsWith('@cseitz')) {
         //     url: 'https://github.com/cseitz/icons/issues'
         // },
         license: 'UNLICENSED',
-        version: '1.0.2',
+        version: '1.0.3',
         name: newName,
     }, null, 2));
 
