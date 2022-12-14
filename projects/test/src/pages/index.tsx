@@ -1,13 +1,16 @@
-import { Box, Button } from '@mantine/core';
-import { Icon, Icon2 } from '@cseitz/icons';
+import { Box, Button, Sx } from '@mantine/core';
+import { Icon } from '@cseitz/icons';
 
-import house from '@cseitz/icons-regular/house';
-import houseUser from '@cseitz/icons-regular/house-user';
+import { faHouse } from '@cseitz/icons-solid/house';
+import { faHouseUser} from '@cseitz/icons-regular/house-user';
+import { faPlus } from '@cseitz/icons-regular/plus'
 
-const HouseIcon = Icon(house);
-const HouseUserIcon = Icon(houseUser);
 
-const PlusIcon = Icon2('@cseitz/icons-regular/plus');
+const HouseIcon = Icon(faHouse);
+const HouseUserIcon = Icon(faHouseUser);
+const PlusIcon = Icon(faPlus);
+
+// const PlusIcon = Icon2('@cseitz/icons-regular/plus');
 
 // const HouseIcon = Icon({
 //     name: 'house',
@@ -19,10 +22,10 @@ const PlusIcon = Icon2('@cseitz/icons-regular/plus');
 
 export default function Homepage() {
     return <Box>
-        <Button>heya</Button>
-        {/* <PlusIcon /> */}
+        <Button leftIcon={<HouseIcon />}>heya</Button>
+        <PlusIcon />
         <HouseIcon />
-        <HouseUserIcon />
+        <HouseUserIcon scale={'2em'} />
         {/* <svg>
             <path d={faHouse.icon[4]} />
         </svg> */}

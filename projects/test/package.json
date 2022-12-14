@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@cseitz/icons": "*",
-    "@cseitz/icons-regular": "^1.0.1",
+    "@cseitz/icons-regular": "^1.0.3",
+    "@cseitz/icons-solid": "^1.0.3",
+    "@cseitz/icons-sharp-solid": "^1.0.3",
     "@cseitz/fontawesome-svg-brands": "^1.0.1",
     "@cseitz/fontawesome-svg-regular": "^1.0.0",
     "@cseitz/fontawesome-svg-solid": "^1.0.0",

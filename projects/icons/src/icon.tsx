@@ -1,17 +1,12 @@
-import F, { IconFamily, IconStyle, IconName, IconPack, IconPathData } from '@fortawesome/fontawesome-common-types';
-// import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import { useEffect, useRef, useState } from 'react';
-import camelCase from 'lodash/camelCase';
+import { IconName, IconDefinition, IconPrefix } from '@fortawesome/fontawesome-common-types';
+import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
+import React from 'react';
 
-type IconDefinition = {
-    name: IconName,
-    styles: Partial<Record<IconStyle, IconFileDefinition>>;
-}
 
 type IconFileDefinition = {
-    definition: F.IconDefinition,
-    prefix: F.IconPrefix,
-    iconName: F.IconName,
+    definition: IconDefinition,
+    prefix: IconPrefix,
+    iconName: IconName,
     height: number,
     width: number,
     svgPathData: string,
@@ -21,45 +16,17 @@ type IconFileDefinition = {
 }
 
 
-export type IconProps = {
-    name: IconName,
-    style?: IconStyle
-}
-
-type SvgIconProps = {
-    svg?: string
-}
-
-
-// export const Icon = Object.assign(function (props: IconProps & SvgIconProps) {
-//     // return <SvgIcon {...props} />
-//     return <div>icon {props.name}</div>
-// }, {
-//     /** Retrieves an icon component bound with the specified properties */
-//     define<D extends IconDefinition>(icon: D) {
-//         console.log(icon);
-//         return function(props: any) {
-//             return <div>
-//                 icon {icon.name}
-//             </div>
-//         }
-//     }
-// })
-
-
-export function Icon(icon: IconFileDefinition) {
-    return function (props: any) {
-        console.log(icon);
-        return <div>icon</div>
+export function Icon(icon: IconDefinition | IconFileDefinition) {
+    return function (props: Omit<FontAwesomeIconProps, 'icon'> & {
+        sx?: FontAwesomeIconProps['style'],
+    }) {
+        let { className, sx, style, scale = '1em', ..._props } = props;
+        const def: IconDefinition = (icon as any)?.definition || icon;
+        return <FontAwesomeIcon className={'fa icon ' + (className || '')} icon={def} style={{
+            height: scale,
+            verticalAlign: '-0.125em',
+            ...style,
+            ...sx,
+        }} {..._props} />
     }
 }
-
-export function Icon2(name: string) {
-    const icon = require(name); //('@cseitz/icons-' + name));
-    console.log({ icon });
-    return function (props: any) {
-        console.log(icon);
-        return <div>icon2</div>
-    }
-}
-
