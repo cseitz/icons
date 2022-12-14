@@ -16,7 +16,7 @@ const MATCH_SOURCE = /(var source = require\(\'.\/)(.+)('\))/;
 
 if (!fa.name.startsWith('@cseitz')) {
 
-    execSync('npm install cli-progress --no-save');
+    execSync('npm install cli-progress lodash --no-save');
 
     const names = [
         ...fa.name.split('/').pop().split('-').filter(o => o != 'pro' && o != 'svg' && o != 'icons' && o != 'free'),
@@ -73,7 +73,7 @@ if (!fa.name.startsWith('@cseitz')) {
                     await rename(__files + '/' + key, __files + '/' + __name + '.js');
                     await rename(__files + '/' + name + '.d.ts', __files + '/' + __name + '.d.ts');
                     mapped.set(name, data.iconName);
-                    named.set(data.iconName);
+                    named.set(__name);
                 }
                 delete require.cache[resolved];
             } catch (err) {
