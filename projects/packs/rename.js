@@ -27,6 +27,7 @@ if (!fa.name.startsWith('@cseitz')) {
 
     writeFileSync(__pkg, JSON.stringify({
         ...fa,
+        scripts: [],
         version: '1.0.0',
         name: newName,
     }, null, 2));
