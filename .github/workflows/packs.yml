@@ -25,10 +25,13 @@ jobs:
       - name: Download Icons
         working-directory: projects/packs
         run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }} PKG=${{ matrix.package }} npm run pull
+      - name: pre ls
+        working-directory: projects/packs/package
+        run: ls
       - name: Rename Package
         working-directory: projects/packs
         run: npm run rename
-      - name: ls
+      - name: post ls
         working-directory: projects/packs/package
         run: ls
       - name: Publish

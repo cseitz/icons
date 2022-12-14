@@ -42,6 +42,7 @@ if (!fa.name.startsWith('@cseitz')) {
             const resolved = __files + '/' + key; //require.resolve();
             const name = basename(key, extname(key));
             try {
+                
                 const data = require(resolved);
                 if ('iconName' in data) {
                     await rename(__package + '/' + key, __package + '/' + data.iconName + '.js');
@@ -54,9 +55,6 @@ if (!fa.name.startsWith('@cseitz')) {
             bar.increment(1);
         }
         bar.stop();
-        if (true) {
-            throw new Error(`Intentional Failure`)
-        }
     })();
 
 
