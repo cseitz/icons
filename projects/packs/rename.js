@@ -13,7 +13,7 @@ const { name } = require(__dirname + '/package.json');
 
 if (!fa.name.startsWith('@cseitz')) {
 
-    execSync('npm install cli-progress --no-save', { stdio: process.stdout });
+    execSync('npm install cli-progress --no-save');
 
     const names = [
         ...fa.name.split('/').pop().split('-').filter(o => o != 'pro' && o != 'svg' && o != 'icons' && o != 'free'),
