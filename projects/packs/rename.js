@@ -73,7 +73,7 @@ if (!fa.name.startsWith('@cseitz')) {
                     await rename(__files + '/' + key, __files + '/' + __name + '.js');
                     await rename(__files + '/' + name + '.d.ts', __files + '/' + __name + '.d.ts');
                     mapped.set(name, data.iconName);
-                    named.set(__name);
+                    named.add(__name);
                 }
                 delete require.cache[resolved];
             } catch (err) {
