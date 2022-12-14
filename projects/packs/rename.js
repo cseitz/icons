@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
 const { writeFileSync, existsSync } = require('fs');
-const { readdir, readFile, rename, writeFile, access } = require('fs/promises');
+const { readdir, readFile, rename, writeFile, access, unlink } = require('fs/promises');
 const { freemem, totalmem, EOL } = require('os');
 const { basename, extname } = require('path');
 const { memoryUsage } = require('process');
@@ -65,9 +65,15 @@ if (!fa.name.startsWith('@cseitz')) {
                     let __name = data.iconName;
                     if (named.has(__name)) {
                         console.log('avoid mapping', name, 'to', __name, {
-                            instead: kebabCase(name),
+                            instead: kebabCase(name).slice(3),
                         });
-                        __name = kebabCase(name);
+                        __name = kebabCase(name).slice(3);
+                    }
+                    if (named.has(__name)) {
+                        console.error('unable to rename', key, 'due to name conflcit');
+                        await unlink(__files + '/' + name + '.d.ts');
+                        await unlink(__files + '/' + key);
+                        return;
                     }
                     // console.log(key, '=>', data.iconName + '.js')
                     await rename(__files + '/' + key, __files + '/' + __name + '.js');
