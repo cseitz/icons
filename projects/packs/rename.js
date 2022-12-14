@@ -39,7 +39,7 @@ if (!fa.name.startsWith('@cseitz')) {
             .filter(o => o.endsWith('.js') && !o.startsWith('index') && o !== 'attribution.js');
         bar.start(files.length, 0);
         for (const key of files) {
-            const resolved = require.resolve(__files + '/' + key);
+            const resolved = __files + '/' + key; //require.resolve();
             const name = basename(key, extname(key));
             const data = require(resolved);
             if ('iconName' in data) {
