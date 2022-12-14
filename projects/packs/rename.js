@@ -11,6 +11,8 @@ const __pkg = __package + '/package.json';
 const fa = require(__pkg);
 const { name } = require(__dirname + '/package.json');
 
+const MATCH_SOURCE = /var source = require\(\'.\/(.+)'\)/g;
+
 if (!fa.name.startsWith('@cseitz')) {
 
     execSync('npm install cli-progress --no-save');
@@ -39,13 +41,16 @@ if (!fa.name.startsWith('@cseitz')) {
             .filter(o => o.endsWith('.js') && !o.startsWith('index') && o !== 'attribution.js');
         bar.start(files.length, 0);
         const mapped = new Map();
-        for (const key of files) {
-            const resolved = __files + '/' + key; //require.resolve();
+        const remaps = new Array();
+        const move = async function(key) {
             const name = basename(key, extname(key));
+            const __file = __files + '/' + name;
+            const data = await readFile(__file + '.js');
+            const resolved = __files + '/' + key; //require.resolve();
             try {
                 const data = require(resolved);
                 if ('iconName' in data) {
-                    mapped.set(key, data.iconName + '.js');
+                    mapped.set(name, data.iconName);
                     // console.log(key, '=>', data.iconName + '.js')
                     await rename(__files + '/' + key, __files + '/' + data.iconName + '.js');
                     await rename(__files + '/' + name + '.d.ts', __files + '/' + data.iconName + '.d.ts');
@@ -56,6 +61,18 @@ if (!fa.name.startsWith('@cseitz')) {
                 console.log(err.code, key, mapped.get(key));
             }
             bar.increment(1);
+        }
+        for (const key of files) {
+            const name = basename(key, extname(key));
+            const data = await readFile(__files + '/' + key, 'utf8');
+            if (MATCH_SOURCE.test(data)) {
+                remaps.push([key, [...data.matchAll(MATCH_SOURCE)][0][1]]);
+            } else {
+                await move(key);
+            }
+        }
+        for (const [key, to] of remaps) {
+            console.log('remap', { key, to })
         }
         bar.stop();
     })();
