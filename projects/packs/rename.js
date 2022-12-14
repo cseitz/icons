@@ -28,7 +28,17 @@ if (!fa.name.startsWith('@cseitz')) {
     writeFileSync(__pkg, JSON.stringify({
         ...fa,
         scripts: [],
-        version: '1.0.0',
+        keywords: [],
+        // homepage: 'https://github.com/cseitz/icons',
+        repository: {
+            type: 'git',
+            url: 'https://github.com/cseitz/icons'
+        },
+        // bugs: {
+        //     url: 'https://github.com/cseitz/icons/issues'
+        // },
+        license: 'UNLICENSED',
+        version: '1.0.1',
         name: newName,
     }, null, 2));
 
