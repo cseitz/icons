@@ -76,7 +76,7 @@ if (!fa.name.startsWith('@cseitz')) {
             console.log('remap', { key, from, to });
             if (to) {
                 const data = await readFile(__files + '/' + key, 'utf8');
-                await writeFile(data.replace(MATCH_SOURCE, `$1${to}$3`));
+                await writeFile(__files + '/' + key, data.replace(MATCH_SOURCE, `$1${to}$3`));
                 await move(key);
             }
         }
