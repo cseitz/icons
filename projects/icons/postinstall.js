@@ -19,6 +19,7 @@ iconPacks.forEach(packName => {
         console.log(packName, { found });
         if (found) {
             console.log('creating symlink', [found, __symlink]);
+            symlinkSync(found, __symlink, 'dir')
         }
     } catch(err) {
         console.log('oof', packName);
